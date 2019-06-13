@@ -81,4 +81,6 @@ type FunctionScaling struct {
 	// Has to be a value between 0-100 (including borders)
 	// Setting the factory to zero disables the auto scaling
 	Factor *int `json:"factor,omitempty"`
+	// ToZero enables a function to be scaled to zero
+	ToZero bool `json:"zero"`
 }
