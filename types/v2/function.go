@@ -57,6 +57,9 @@ type Function struct {
 
 	// Scaling represents the minimum (initial), maximum replica count and scaling factor
 	Scaling *FunctionScaling `json:"scaling"`
+
+	// FunctionTopic defines the MQ topics that this function is subscribed to
+	Topics []FunctionTopic `json:"topics"`
 }
 
 // FunctionResources represents CPU and memory resources for an OpenFaaS function
@@ -84,3 +87,6 @@ type FunctionScaling struct {
 	// ToZero enables a function to be scaled to zero
 	ToZero bool `json:"zero"`
 }
+
+// FunctionTopic represents an OpenFaaS MQ topic name
+type FunctionTopic string
