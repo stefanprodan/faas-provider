@@ -10,7 +10,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/openfaas/faas-provider/auth"
-	"github.com/openfaas/faas-provider/types"
+	types "github.com/openfaas/faas-provider/types/v1"
 )
 
 var r *mux.Router
