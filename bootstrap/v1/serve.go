@@ -5,11 +5,11 @@ package v1
 
 import (
 	"fmt"
+	"github.com/openfaas/faas-provider/auth/v1"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/openfaas/faas-provider/auth"
 	types "github.com/openfaas/faas-provider/types/v1"
 )
 
@@ -29,7 +29,7 @@ func Router() *mux.Router {
 func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 
 	if config.EnableBasicAuth {
-		reader := auth.ReadBasicAuthFromDisk{
+		reader := v1.ReadBasicAuthFromDisk{
 			SecretMountPath: config.SecretMountPath,
 		}
 
@@ -38,14 +38,14 @@ func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 			log.Fatal(err)
 		}
 
-		handlers.FunctionReader = auth.DecorateWithBasicAuth(handlers.FunctionReader, credentials)
-		handlers.DeployHandler = auth.DecorateWithBasicAuth(handlers.DeployHandler, credentials)
-		handlers.DeleteHandler = auth.DecorateWithBasicAuth(handlers.DeleteHandler, credentials)
-		handlers.UpdateHandler = auth.DecorateWithBasicAuth(handlers.UpdateHandler, credentials)
-		handlers.ReplicaReader = auth.DecorateWithBasicAuth(handlers.ReplicaReader, credentials)
-		handlers.ReplicaUpdater = auth.DecorateWithBasicAuth(handlers.ReplicaUpdater, credentials)
-		handlers.InfoHandler = auth.DecorateWithBasicAuth(handlers.InfoHandler, credentials)
-		handlers.SecretHandler = auth.DecorateWithBasicAuth(handlers.SecretHandler, credentials)
+		handlers.FunctionReader = v1.DecorateWithBasicAuth(handlers.FunctionReader, credentials)
+		handlers.DeployHandler = v1.DecorateWithBasicAuth(handlers.DeployHandler, credentials)
+		handlers.DeleteHandler = v1.DecorateWithBasicAuth(handlers.DeleteHandler, credentials)
+		handlers.UpdateHandler = v1.DecorateWithBasicAuth(handlers.UpdateHandler, credentials)
+		handlers.ReplicaReader = v1.DecorateWithBasicAuth(handlers.ReplicaReader, credentials)
+		handlers.ReplicaUpdater = v1.DecorateWithBasicAuth(handlers.ReplicaUpdater, credentials)
+		handlers.InfoHandler = v1.DecorateWithBasicAuth(handlers.InfoHandler, credentials)
+		handlers.SecretHandler = v1.DecorateWithBasicAuth(handlers.SecretHandler, credentials)
 	}
 
 	// System (auth) endpoints
