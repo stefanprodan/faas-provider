@@ -8,6 +8,9 @@ type Function struct {
 	// Service is the name of the function
 	Service string `json:"service"`
 
+	// ServiceAccount represents the identity of the function for the orchestration layer
+	ServiceAccount string `json:"serviceAccount"`
+
 	// Image corresponds to a container image
 	Image string `json:"image"`
 
@@ -48,10 +51,34 @@ type Function struct {
 	// ReadOnlyRootFilesystem removes write-access from the root filesystem
 	// mount-point.
 	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem"`
+
+	// FunctionHealthCheck represents the custom HTTP health-check path and check initial delay
+	HealthCheck *FunctionHealthCheck `json:"healthCheck"`
+
+	// Scaling represents the minimum (initial), maximum replica count and scaling factor
+	Scaling *FunctionScaling `json:"scaling"`
 }
 
 // FunctionResources represents CPU and memory resources for an OpenFaaS function
 type FunctionResources struct {
 	Memory string `json:"memory"`
 	CPU    string `json:"cpu"`
+}
+
+// FunctionHealthCheck represents the custom HTTP health-check path and check initial delay
+type FunctionHealthCheck struct {
+	Path         string `json:"path"`
+	InitialDelay string `json:"initialDelay"`
+}
+
+// FunctionScaling represents the minimum (initial), maximum replica count and scaling factor
+type FunctionScaling struct {
+	// Min defaults to one replica
+	Min *int `json:"min,omitempty"`
+	// Max defaults to 20 replicas
+	Max *int `json:"max,omitempty"`
+	// Factor defaults to 20%
+	// Has to be a value between 0-100 (including borders)
+	// Setting the factory to zero disables the auto scaling
+	Factor *int `json:"factor,omitempty"`
 }
